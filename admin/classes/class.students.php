@@ -23,7 +23,7 @@ include'./../connection.php';
 				ob_end_clean();
 				header("location: students.php?added=exist");
 			}else{
-				$insertSql = mysqli_query($_CON, 
+				$insertSql = mysqli_query($_CON,
 				"INSERT
 				INTO
 				student
@@ -78,10 +78,13 @@ include'./../connection.php';
 				 <tr>
 				  <td>$cin</td>
 				  <td>$fname $lname</td>
-				  <td>$course_acc $year</td>
+				  <td>$course_acc-$year</td>
+				  <td class='text-center'>
+            <img src='https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=$cin' />
+          </td>
 				  <td>
-				   <button class='btn btn-primary btn-xs' data-toggle='modal' data-target='#upd$id'><i class='glyphicon glyphicon-pencil'></i></button>
-				   <button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#del$id'> <i class='glyphicon glyphicon-trash'></i></button>
+				      <button class='btn btn-primary btn-xs' data-toggle='modal' data-target='#upd$id'><i class='glyphicon glyphicon-pencil'></i></button>
+				      <button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#del$id'> <i class='glyphicon glyphicon-trash'></i></button>
 					</td>
 				 </tr>
 				";
@@ -108,7 +111,7 @@ include'./../connection.php';
 					";
 					}
 	}
-	
+
 	function updMod(){
 		global $_CON;
 		$sqlSearch = mysqli_query($_CON, "SELECT * FROM student ");
@@ -171,12 +174,12 @@ include'./../connection.php';
 						<div class='modal-footer'>
 							<input class='form-control' name='UPD_ID' type='hidden' value='$_ID'>
 							<button class='btn btn-default' data-dismiss='modal' type='button'>Close</button>
-							<button class='btn btn-primary' name='btn_upd' type='submit'>Update</button> 
+							<button class='btn btn-primary' name='btn_upd' type='submit'>Update</button>
 						</div>
 						</form>
 					</div>
 				</div>
-			</div>		
+			</div>
 			";
 		}
 	}
@@ -193,9 +196,9 @@ include'./../connection.php';
 			$inpLNAME = mysqli_real_escape_string($_CON, $_POST['inpLNAME']);
 			$inpCOURSE = mysqli_real_escape_string($_CON, $_POST['inpCOURSE']);
 			$inpYEARLVL = mysqli_real_escape_string($_CON, $_POST['inpYEARLVL']);
-			
+
 			//CHECK IF DUPLICATED
-			$sqlSearch = mysqli_query($_CON, 
+			$sqlSearch = mysqli_query($_CON,
 			"SELECT student_cin FROM student WHERE std_id='$_ID' ");
 			$_row = mysqli_fetch_array($sqlSearch);
 			$_GETEIN = $_row['student_cin'];
@@ -216,7 +219,7 @@ include'./../connection.php';
 				exit;
 			}else{
 				//CHECK IF EIN EXIST
-				$sqlCheck = mysqli_query($_CON, 
+				$sqlCheck = mysqli_query($_CON,
 				"SELECT student_cin FROM student WHERE student_cin='$inpCIN'");
 				$count = mysqli_num_rows($sqlCheck);
 				if($count == 1){
@@ -234,9 +237,9 @@ include'./../connection.php';
 					parents
 					SET
 					parent_cin='$inpCIN'
-					WHERE 
+					WHERE
 					parent_id='$parent_id'");
-					
+
 					$sqlUpdate = mysqli_query($_CON,
 					"UPDATE
 					student
@@ -265,15 +268,15 @@ function delMod(){
 		$_ID = mysqli_real_escape_string($_CON, $row['std_id']);
 		$cin = mysqli_real_escape_string($_CON, $row['student_cin']);
 		echo "
-						<div class='modal fade' id='del$_ID' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'> 
+						<div class='modal fade' id='del$_ID' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
 							<div class='modal-dialog'>
-								<div class='modal-content'> 
+								<div class='modal-content'>
 									<div class='modal-header'>
-										<button type='button' class='close' data-dismiss='modal' aria-hidden='true'> &times; </button> 
-										<h4 class='modal-title' id='myModalLabel'> Delete</h4> 
-									</div> 
-								<div class='modal-body'> Are you Sure you want to delete <b>$cin</b> in the database?</div> 
-								<div class='modal-footer'> 
+										<button type='button' class='close' data-dismiss='modal' aria-hidden='true'> &times; </button>
+										<h4 class='modal-title' id='myModalLabel'> Delete</h4>
+									</div>
+								<div class='modal-body'> Are you Sure you want to delete <b>$cin</b> in the database?</div>
+								<div class='modal-footer'>
 									<form method='post' action='"; delStud(); echo"'>
 									<input type='hidden' value='$_ID' name='STUDENT_ID'>
 									<input type='hidden' value='$cin' name='STUDENT_CIN'>

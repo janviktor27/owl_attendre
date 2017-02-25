@@ -37,7 +37,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-									<?php view(); ?>
+									               <?php view(); ?>
                                 </tbody>
                             </table>
 						</section>

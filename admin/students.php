@@ -30,6 +30,7 @@
                                     <th>CIN</th>
                                     <th>Name</th>
                                     <th>Course and Year</th>
+                                    <th class="text-center">QR-CODE</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -45,7 +46,7 @@
         </section>
     </section>
     <!--main content end-->
-          
+
 <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">

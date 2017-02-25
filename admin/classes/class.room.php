@@ -13,7 +13,7 @@ include'./../connection.php';
 			$inpRoom = mysqli_real_escape_string($_CON, $_POST['inpRoom']);
 			$inpBuilding = mysqli_real_escape_string($_CON, $_POST['inpBuilding']);
 			//Check if  exist
-			$sqlSearch = mysqli_query($_CON, 
+			$sqlSearch = mysqli_query($_CON,
 			"SELECT
 			room_name
 			FROM
@@ -25,7 +25,7 @@ include'./../connection.php';
 				ob_end_clean();
 				header("location: room.php?add=exist");
 			}else{
-				$insertsql = mysqli_query($_CON, 
+				$insertsql = mysqli_query($_CON,
 				"INSERT
 				INTO
 				rooms
@@ -52,10 +52,15 @@ include'./../connection.php';
 				$room_name = mysqli_real_escape_string($_CON, $row['room_name']);
 				$building_id = mysqli_real_escape_string($_CON, $row['building_id']);
 				$building_name = buildName($building_id);
+        $merged_name = "$room_name-$building_name";
+        $encode_name = urlencode(base64_encode($merged_name));
 				echo"
 				 <tr>
 				  <td>$room_name</td>
 				  <td>$building_name</td>
+          <td class='text-center'>
+            <img src='https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=$merged_name' />
+          </td>
 				  <td>
 				   <button class='btn btn-primary btn-xs' data-toggle='modal' data-target='#upd$id'><i class='glyphicon glyphicon-pencil'></i></button>
 				   	<button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#del$id'> <i class='glyphicon glyphicon-trash'></i></button>
@@ -99,7 +104,7 @@ include'./../connection.php';
 			";
 		}
 	}
-	
+
 	function delMod(){
 		include_once'class.delete.php';
 		global $_CON;
@@ -112,15 +117,15 @@ include'./../connection.php';
 				$tbl_name = "rooms";
 				$row_name = "room_id";
 				echo "
-										<div class='modal fade' id='del$_ID' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'> 
+										<div class='modal fade' id='del$_ID' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
 								<div class='modal-dialog'>
-									<div class='modal-content'> 
+									<div class='modal-content'>
 										<div class='modal-header'>
-											<button type='button' class='close' data-dismiss='modal' aria-hidden='true'> &times; </button> 
-											<h4 class='modal-title' id='myModalLabel'> Delete</h4> 
-										</div> 
-									<div class='modal-body'> Are you Sure you want to delete <b> $name </b>in the database?</div> 
-									<div class='modal-footer'> 
+											<button type='button' class='close' data-dismiss='modal' aria-hidden='true'> &times; </button>
+											<h4 class='modal-title' id='myModalLabel'> Delete</h4>
+										</div>
+									<div class='modal-body'> Are you Sure you want to delete <b> $name </b>in the database?</div>
+									<div class='modal-footer'>
 										<form method='post' action='"; del(); echo"'>
 										<button type='button' class='btn btn-default' data-dismiss='modal'>Close </button>
 										<input class='form-control' type='hidden' value='$_ID' class='form-control' name='id'>
@@ -135,9 +140,9 @@ include'./../connection.php';
 							</div>";
 		}
 		}
-		
+
 	}
-	
+
 	function updMod(){
 				global $_CON;
 		$sqlSearch = mysqli_query($_CON, "SELECT * FROM rooms ");
@@ -186,7 +191,7 @@ include'./../connection.php';
 			}
 		}
 	}
-	
+
 /////////////////////////////////////////////
 //UPDATE METHOD
 	function updAction(){
@@ -195,9 +200,9 @@ include'./../connection.php';
 			$_ID = mysqli_real_escape_string($_CON, $_POST['UPD_ID']);
 			$inpRoom = mysqli_real_escape_string($_CON, $_POST['inpRoom']);
 			$inpBuilding = mysqli_real_escape_string($_CON, $_POST['inpBuilding']);
-			
+
 			//CHECK IF DUPLICATED
-			$sqlSearch = mysqli_query($_CON, 
+			$sqlSearch = mysqli_query($_CON,
 			"SELECT
 			room_name
 			FROM
