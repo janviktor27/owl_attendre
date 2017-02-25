@@ -15,7 +15,7 @@ include'./../connection.php';
 			$lname = mysqli_real_escape_string($_CON, $_POST['Emp_Lname']);
 			$inpDepartment = mysqli_real_escape_string($_CON, $_POST['inpDepartment']);
 			$defaultPass = md5("123456");
-			
+
 			//Check if subj_code exist
 			$sqlSearch = mysqli_query($_CON, "SELECT * FROM instructor WHERE ins_ein='$cin' ");
 			$count = mysqli_num_rows($sqlSearch);
@@ -23,7 +23,7 @@ include'./../connection.php';
 				ob_end_clean();
 				header("location: instructor.php?added=exist");
 			}else{
-				$insertsql = mysqli_query($_CON, 
+				$insertsql = mysqli_query($_CON,
 				"INSERT
 				INTO
 				instructor
@@ -31,7 +31,7 @@ include'./../connection.php';
 				ins_fname,
 				ins_lname,
 				dept_id,
-				ins_pwd) 
+				ins_pwd)
 				VALUES
 				('$cin',
 				'$fname',
@@ -49,9 +49,9 @@ include'./../connection.php';
 //DEPARTMENT OPTION
 	function optDept(){
 		global $_CON;
-		$sqlSearch = mysqli_query($_CON, 
+		$sqlSearch = mysqli_query($_CON,
 		"SELECT *
-		FROM 
+		FROM
 		department");
 		$count = mysqli_num_rows($sqlSearch);
 		if($count > 0){
@@ -86,6 +86,9 @@ include'./../connection.php';
 				  <td>$ein</td>
 				  <td>$lname, $fname</td>
 				  <td>$dept_name</td>
+          <td class='text-center'>
+            <img src='https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=$ein' />
+          </td>
 				  <td>
 				   <button class='btn btn-primary btn-xs' data-toggle='modal' data-target='#upd$id'><i class='glyphicon glyphicon-pencil'></i></button>
 				   <button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#del$id'> <i class='glyphicon glyphicon-trash'></i></button>
@@ -103,7 +106,7 @@ include'./../connection.php';
 	}
 function deptName($dept_id){
 	global $_CON;
-	$sqlSearch = mysqli_query($_CON, 
+	$sqlSearch = mysqli_query($_CON,
 	"SELECT
 	dep_acc
 	FROM
@@ -118,7 +121,7 @@ function deptName($dept_id){
 	}
 }
 function delMod(){
-	
+
 		include_once'class.delete.php';
 		global $_CON;
 		$sqlSearch = mysqli_query($_CON, "SELECT * FROM instructor ");
@@ -130,15 +133,15 @@ function delMod(){
 		$tbl_name = "instructor";
 		$row_name = "ins_id";
 		echo "
-							<div class='modal fade' id='del$_ID' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'> 
+							<div class='modal fade' id='del$_ID' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
 								<div class='modal-dialog'>
-									<div class='modal-content'> 
+									<div class='modal-content'>
 										<div class='modal-header'>
-											<button type='button' class='close' data-dismiss='modal' aria-hidden='true'> &times; </button> 
-											<h4 class='modal-title' id='myModalLabel'> Delete</h4> 
-										</div> 
-									<div class='modal-body'> Are you Sure you want to delete <b>$cin</b> in the database?</div> 
-									<div class='modal-footer'> 
+											<button type='button' class='close' data-dismiss='modal' aria-hidden='true'> &times; </button>
+											<h4 class='modal-title' id='myModalLabel'> Delete</h4>
+										</div>
+									<div class='modal-body'> Are you Sure you want to delete <b>$cin</b> in the database?</div>
+									<div class='modal-footer'>
 										<form method='post' action='"; del(); echo"'>
 										<button type='button' class='btn btn-default' data-dismiss='modal'>Close </button>
 										<input class='form-control' type='hidden' value='$_ID' class='form-control' name='id'>
@@ -155,9 +158,9 @@ function delMod(){
 }
 
 function updMod(){
-	
+
 	global $_CON;
-		$sqlSearch = mysqli_query($_CON, "SELECT * FROM instructor ");
+		$sqlSearch = mysqli_query($_CON, "SELECT * FROM instructor");
 		$count = mysqli_num_rows($sqlSearch);
 		if($count > 0){
 			while($row=mysqli_fetch_array($sqlSearch)){
@@ -203,7 +206,7 @@ function updMod(){
 						<div class='modal-footer'>
 							<input class='form-control' name='UPD_ID' type='hidden' value='$_ID'>
 							<button class='btn btn-default' data-dismiss='modal' type='button'>Close</button>
-							<button class='btn btn-primary' name='btn_upd' type='submit'>Update</button> 
+							<button class='btn btn-primary' name='btn_upd' type='submit'>Update</button>
 						</div>
 						</form>
 					</div>
@@ -224,7 +227,7 @@ function updMod(){
 			$fname = mysqli_real_escape_string($_CON, $_POST['Emp_Fname']);
 			$lname = mysqli_real_escape_string($_CON, $_POST['Emp_Lname']);
 			$inpDepartment = mysqli_real_escape_string($_CON, $_POST['inpDepartment']);
-			
+
 			//CHECK IF INSTRUCTOR EIN ARE THE SAME FROM TEXTBOX AND DATABASE
 			$sqlSearch = mysqli_query($_CON, "SELECT ins_ein FROM instructor WHERE ins_id='$_ID' ");
 			$_row = mysqli_fetch_array($sqlSearch);
