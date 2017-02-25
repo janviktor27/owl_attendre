@@ -7,21 +7,21 @@
 include'./../connection.php';
 
     if(isset($_POST['etUsername']) && isset($_POST['etPassword'])){
-      login($username,$password);
+      login($cin,$password);
     }
 
-    function login($username,$password){
+    function login($cin,$password){
       global $_CON;
 
    	  $result = mysqli_query($_CON,
       "SELECT
-       ins_id
+       std_id
        FROM
-       instructor
+       student
        WHERE
-       ins_ein='$username'
+       student_cin='$cin'
        AND
-       ins_pwd='$password'");
+       std_pwd='$password'");
 
     	if($result -> num_rows > 0){
     		echo'success';
