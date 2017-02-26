@@ -7,10 +7,13 @@
 include'./../connection.php';
 
     if(isset($_POST['etUsername']) && isset($_POST['etPassword'])){
-      login($username,$password);
+      $ein = mysqli_real_escape_string($_CON,$_POST['etUsername']);
+      $password = mysqli_real_escape_string($_CON,$_POST['etPassword']);
+      $pw = md5($password);
+      login($ein,$pw);
     }
 
-    function login($username,$password){
+    function login($ein,$password){
       global $_CON;
 
    	  $result = mysqli_query($_CON,
@@ -19,7 +22,7 @@ include'./../connection.php';
        FROM
        instructor
        WHERE
-       ins_ein='$username'
+       ins_ein='$ein'
        AND
        ins_pwd='$password'");
 

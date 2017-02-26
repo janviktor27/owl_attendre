@@ -5,8 +5,6 @@
  * Written by JAN VIKTOR ADORA & CHRISTIAN ACE JOHN ASENCION CACOT, FEB 2017
  */
 include'./../connection.php';
-date_default_timezone_set('Asia/Manila');
-$_NOW = date("Y-m-d h:i:s");
 $_YEAR = date("Y");
 $previousyear = $_YEAR - 1;
 $_SY = "$previousyear-$_YEAR";

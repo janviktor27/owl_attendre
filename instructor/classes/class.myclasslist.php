@@ -7,7 +7,6 @@
 include'./../connection.php';
 date_default_timezone_set('Asia/Manila');
 include'globalfunctions.php';
-$_NOW = date("Y-m-d h:i:s");
 $ins_id = $_SESSION['ins_id'];
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -45,16 +44,17 @@ $ins_id = $_SESSION['ins_id'];
 				$_ID = mysqli_real_escape_string($_CON, $row['sched_id']);
 				$enc_ID = urlencode(base64_encode($_ID));
 				$getClass = getClass($_ID);
+				$subject_id = mysqli_real_escape_string($_CON, $row['subject_id']);
+				$enc_subj = urlencode(base64_encode($subject_id));
 				if($getClass > 0){
 					$dynaButton = "
-				   <a href='view.thisclass.php?sched=$enc_ID' class='btn btn-primary btn-xs'> <i class='glyphicon glyphicon-list'></i></a>
+				   <a href='view.myclass.php?sched=$enc_ID&&subj=$enc_subj' class='btn btn-primary btn-xs'> <i class='glyphicon glyphicon-list'></i></a>
 					";
 				}else{
 					$dynaButton = "
 				   <button class='btn btn-primary btn-xs disabled'> <i class='glyphicon glyphicon-list'></i></button>
 					";
 				}
-				$subject_id = mysqli_real_escape_string($_CON, $row['subject_id']);
 				$subject_name = getSubjectName($subject_id);
 				$room_id = mysqli_real_escape_string($_CON, $row['room_id']);
 				$buildRoom = getBuiRoom($room_id);
@@ -86,7 +86,7 @@ $ins_id = $_SESSION['ins_id'];
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//SUBJECT GET
+//COUNT CLASS
 	function getClass($_ID){
 		global $_CON;
 		$sqlSearch = mysqli_query($_CON,

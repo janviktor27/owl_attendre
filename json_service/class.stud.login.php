@@ -7,7 +7,10 @@
 include'./../connection.php';
 
     if(isset($_POST['etUsername']) && isset($_POST['etPassword'])){
-      login($cin,$password);
+      $cin = mysqli_real_escape_string($_CON,$_POST['etUsername']);
+      $password = mysqli_real_escape_string($_CON,$_POST['etPassword']);
+      $pw = md5($password);
+      login($cin,$pw);
     }
 
     function login($cin,$password){

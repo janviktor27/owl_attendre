@@ -4,6 +4,8 @@
  * Proprietary and confidential
  * Written by JAN VIKTOR ADORA & CHRISTIAN ACE JOHN ASENCION CACOT, FEB 2017
  */
+ date_default_timezone_set('Asia/Manila');
+ 
     function getYear(){
       global $_CON;
       $GETYEAR = mysqli_query($_CON,"SELECT * FROM cur_school_yr");

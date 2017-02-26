@@ -29,8 +29,8 @@ $ins_id = $_SESSION['ins_id'];
 			$inpStartTime = mysqli_real_escape_string($_CON, $_POST['inpStartTime']);
 			$inpEndTime = mysqli_real_escape_string($_CON, $_POST['inpEndTime']);
 			$inpSchedCODE = mysqli_real_escape_string($_CON, $_POST['inpSchedCODE']);
-			
-			$sqlSearch = mysqli_query($_CON, 
+
+			$sqlSearch = mysqli_query($_CON,
 			"SELECT
 			ins_id,
 			room_id,
@@ -52,7 +52,7 @@ $ins_id = $_SESSION['ins_id'];
 			if($count > 0){
 				$daysCount = 0;
 				$conflictCount = 0;
-				//SCHEDULE CONFLICT CHECKING 
+				//SCHEDULE CONFLICT CHECKING
 				while($row=mysqli_fetch_array($sqlSearch)){
 					$days = $row['days'];
 					$sched_code = $row['sched_code'];
@@ -67,7 +67,7 @@ $ins_id = $_SESSION['ins_id'];
 					}
 				}
 				//SCHEDULE END
-				
+
 					////////////////////////
 					//IF DAY EXIST
 					if($daysCount > 0){
@@ -78,7 +78,7 @@ $ins_id = $_SESSION['ins_id'];
 							exit;
 						}else{
 							//INSERT DATA HERE HAS NO TIME CONFLICTS
-							$sqlInsert = mysqli_query($_CON, 
+							$sqlInsert = mysqli_query($_CON,
 							"INSERT
 							INTO
 							sched_table
@@ -92,7 +92,7 @@ $ins_id = $_SESSION['ins_id'];
 							days,
 							start_time,
 							end_time,
-							date_added) 
+							date_added)
 							VALUES
 							('$inpSubject',
 							'$ins_id',
@@ -111,7 +111,7 @@ $ins_id = $_SESSION['ins_id'];
 						}
 					}else{
 						//INSERT DATA HERE DAYS DOESN'T EXIST
-						$sqlInsert = mysqli_query($_CON, 
+						$sqlInsert = mysqli_query($_CON,
 						"INSERT
 						INTO
 						sched_table
@@ -125,7 +125,7 @@ $ins_id = $_SESSION['ins_id'];
 						days,
 						start_time,
 						end_time,
-						date_added) 
+						date_added)
 						VALUES
 						('$inpSubject',
 						'$ins_id',
@@ -144,7 +144,7 @@ $ins_id = $_SESSION['ins_id'];
 					}
 			}else{
 				//INSERT DATA HERE VERY UNIQUE SCHEDULE
-				$sqlInsert = mysqli_query($_CON, 
+				$sqlInsert = mysqli_query($_CON,
 				"INSERT
 				INTO
 				sched_table
@@ -158,7 +158,7 @@ $ins_id = $_SESSION['ins_id'];
 				days,
 				start_time,
 				end_time,
-				date_added) 
+				date_added)
 				VALUES
 				('$inpSubject',
 				'$ins_id',
@@ -183,9 +183,9 @@ $ins_id = $_SESSION['ins_id'];
 //SUBJECT OPTION
 	function optSubject(){
 		global $_CON;
-		$sqlSearch = mysqli_query($_CON, 
+		$sqlSearch = mysqli_query($_CON,
 		"SELECT *
-		FROM 
+		FROM
 		subject");
 		$count = mysqli_num_rows($sqlSearch);
 		if($count > 0){
@@ -204,9 +204,9 @@ $ins_id = $_SESSION['ins_id'];
 //ROOM OPTION
 	function optRoom(){
 		global $_CON;
-		$sqlSearch = mysqli_query($_CON, 
+		$sqlSearch = mysqli_query($_CON,
 		"SELECT *
-		FROM 
+		FROM
 		rooms
 		ORDER BY
 		room_name
@@ -230,7 +230,7 @@ $ins_id = $_SESSION['ins_id'];
 //GET BUILDING NAME
 function buildingName($building_id){
 	global $_CON;
-	$sqlSearch = mysqli_query($_CON, 
+	$sqlSearch = mysqli_query($_CON,
 	"SELECT
 	building_name
 	FROM
@@ -249,9 +249,9 @@ function buildingName($building_id){
 //ROOM OPTION
 	function optCourse(){
 		global $_CON;
-		$sqlSearch = mysqli_query($_CON, 
+		$sqlSearch = mysqli_query($_CON,
 		"SELECT *
-		FROM 
+		FROM
 		course
 		ORDER BY
 		course_name
@@ -279,7 +279,7 @@ function buildingName($building_id){
 		$_SY = getYear();
 		$regularSem = RegularSem();
 		$triSem = TriSem();
-		$sqlSearch = mysqli_query($_CON, 
+		$sqlSearch = mysqli_query($_CON,
 		"SELECT
 		sched_id,
 		subject_id,
@@ -336,7 +336,7 @@ function buildingName($building_id){
 				  <td>$course_name</td>
 				  <td>$days | $forStartTime-$forEndTime</td>
 				  <td>$sched_code</td>
-				  <td>$dynaButton</td>
+				  <td class='col-md-2'>$dynaButton</td>
 				 </tr>
 				";
 			}
@@ -348,15 +348,15 @@ function buildingName($building_id){
 			";
 		}
 	}
-	
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //SUBJECT GET
 	function getClass($_ID){
 		global $_CON;
-		$sqlSearch = mysqli_query($_CON, 
-		"SELECT 
+		$sqlSearch = mysqli_query($_CON,
+		"SELECT
 		class_id
-		FROM 
+		FROM
 		class_table
 		WHERE
 		sched_id='$_ID' ");
@@ -367,10 +367,10 @@ function buildingName($building_id){
 //SUBJECT GET
 	function getSubjectName($subject_id){
 		global $_CON;
-		$sqlSearch = mysqli_query($_CON, 
-		"SELECT 
+		$sqlSearch = mysqli_query($_CON,
+		"SELECT
 		subj_name
-		FROM 
+		FROM
 		subject
 		WHERE
 		subj_id='$subject_id'");
@@ -387,11 +387,11 @@ function buildingName($building_id){
 //ROOM GET
 	function getBuiRoom($room_id){
 		global $_CON;
-		$sqlSearch = mysqli_query($_CON, 
+		$sqlSearch = mysqli_query($_CON,
 		"SELECT
 		room_name,
 		building_id
-		FROM 
+		FROM
 		rooms
 		WHERE
 		room_id='$room_id' ");
@@ -409,10 +409,10 @@ function buildingName($building_id){
 //ROOM OPTION
 	function getCourse($course_id){
 		global $_CON;
-		$sqlSearch = mysqli_query($_CON, 
+		$sqlSearch = mysqli_query($_CON,
 		"SELECT
 		course_acc
-		FROM 
+		FROM
 		course
 		WHERE
 		course_id='$course_id' ");
@@ -424,10 +424,10 @@ function buildingName($building_id){
 			}
 		}
 	}
-	
+
 function RegularSem(){
 	global $_CON;
-	$sqlSearch = mysqli_query($_CON, 
+	$sqlSearch = mysqli_query($_CON,
 	"SELECT
 	value
 	FROM
@@ -444,7 +444,7 @@ function RegularSem(){
 
 function TriSem(){
 	global $_CON;
-	$sqlSearch = mysqli_query($_CON, 
+	$sqlSearch = mysqli_query($_CON,
 	"SELECT
 	value
 	FROM
@@ -467,7 +467,7 @@ function TriSem(){
 		$_SY = getYear();
 		$regularSem = RegularSem();
 		$triSem = TriSem();
-		$sqlSearch = mysqli_query($_CON, 
+		$sqlSearch = mysqli_query($_CON,
 		"SELECT
 		sched_id,
 		subject_id,
@@ -551,7 +551,7 @@ function TriSem(){
 			}
 		}
 	}
-	
+
 /////////////////////////////////////////////
 //DELETE MODAL
 	function delAction(){

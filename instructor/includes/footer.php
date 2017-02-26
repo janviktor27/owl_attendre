@@ -18,7 +18,6 @@
 <script src="../assets/js/flot-chart/jquery.flot.resize.js"></script>
 <script src="../assets/js/flot-chart/jquery.flot.pie.resize.js"></script>
 
-
 <!--common script init for all pages-->
 <script src="../assets/js/scripts.js"></script>
 </body>
