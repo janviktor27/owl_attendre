@@ -3,3 +3,6 @@ DATABASE/
 owl_attendre/
 tester/
 .ftpconfig
+unit_testing/
+_index.php
+_student.php

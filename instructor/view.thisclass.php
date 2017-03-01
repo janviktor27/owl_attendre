@@ -20,7 +20,7 @@
                 <div class="col-md-12">
                     <section class="panel">
                         <header class="panel-heading">
-              						CLASS STUDENTS
+              						<?php getSubj(); ?>- CLASS STUDENTS
               						<span class="pull-right">
               							<a href="schedules.php?ref=back" class="btn btn-info btn-xs"><i class="fa fa-arrow-left"></i> </a>
               						</span>
@@ -51,5 +51,5 @@
 
 <?php include'includes/rightsidebar.php';?>
 </section>
-<?php //delMod(); ?>
+<?php delMod(); ?>
 <?php include_once'includes/footer.php'; ?>

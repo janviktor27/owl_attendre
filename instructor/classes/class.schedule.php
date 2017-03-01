@@ -305,10 +305,12 @@ function buildingName($building_id){
 			while($row=mysqli_fetch_array($sqlSearch)){
 				$_ID = mysqli_real_escape_string($_CON, $row['sched_id']);
 				$enc_ID = urlencode(base64_encode($_ID));
+				$subject_id = mysqli_real_escape_string($_CON, $row['subject_id']);
+				$encSubj = urlencode(base64_encode($subject_id));
 				$getClass = getClass($_ID);
 				if($getClass > 0){
 					$dynaButton = "
-				   <a href='view.thisclass.php?sched=$enc_ID' class='btn btn-primary btn-xs'> <i class='glyphicon glyphicon-list'></i></a>
+				   <a href='view.thisclass.php?sched=$enc_ID&&subj=$encSubj' class='btn btn-primary btn-xs'> <i class='glyphicon glyphicon-list'></i></a>
 				   <button class='btn btn-danger btn-xs disabled'> <i class='glyphicon glyphicon-trash'></i></button>
 					";
 				}else{

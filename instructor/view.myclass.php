@@ -25,14 +25,14 @@
                               <a href="myclass.list.php?ref=back" class="btn btn-info btn-xs"><i class="fa fa-arrow-left"></i> </a>
                               <?php getSubj(); ?><span class="hidden-xs"> - CLASS STUDENTS</span>
                             </div>
-                            <form method="post" action="<?php globalDATE(); ?>">
-                            <div class="input-group col-md-4 col-xs-6 pull-right">
+                            <form method="get" action="<?php globalDATE(); ?>">
+`                            <div class="input-group col-md-4 col-xs-6 pull-right">
                                 <input type="date" name="inpDATE" class="form-control input-sm"/>
                                 <span class="input-group-btn">
                                   <button name="btn_search" class="btn btn-success btn-sm" type="submit"><i class="fa fa-search"></i></button>
                                 </span>
                             </div>
-                          </form>
+                           </form>
                           </div>
                         </header>
                         <div class="panel-body">

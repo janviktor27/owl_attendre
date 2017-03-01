@@ -20,7 +20,7 @@ include_once('./../connection.php');
 				ob_end_clean();
 				exit;
 			}else{
-				$sqlInsert = mysqli_query($_CON, 
+				$sqlInsert = mysqli_query($_CON,
 				"INSERT
 				INTO
 				department
@@ -48,7 +48,7 @@ include_once('./../connection.php');
 				 <tr>
 				  <td>$dep_acc</td>
 				  <td align='center'>
-				   <button class='btn btn-info btn-xs' data-toggle='modal' data-target='#updMod$_ID'><i class='glyphicon glyphicon-edit'></i></button>
+				   <button class='btn btn-primary btn-xs' data-toggle='modal' data-target='#updMod$_ID'><i class='glyphicon glyphicon-pencil'></i></button>
 				   <button class='btn btn-danger btn-xs' data-toggle='modal' data-target='#delMod$_ID'><i class='glyphicon glyphicon-trash'></i></button>
 				  </td>
 				 </tr>

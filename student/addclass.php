@@ -34,7 +34,6 @@
                                     <th>Time/Days</th>
                                     <th>Building-Room</th>
                                     <th>Instructor</th>
-                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -50,7 +49,7 @@
         </section>
     </section>
     <!--main content end-->
-          
+
 <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
