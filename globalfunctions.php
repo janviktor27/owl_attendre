@@ -6,6 +6,7 @@
  */
  date_default_timezone_set('Asia/Manila');
  $_NOW = date("Y-m-d h:i:a");
+ $_TODAY = date("Y-m-d");
 
     function getYear(){
       global $_CON;

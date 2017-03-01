@@ -15,7 +15,25 @@
         <section class="wrapper">
         <!-- page start-->
 		<div class="row">
+      <div class="col-md-3">
+          <div class="profile-nav alt">
+              <section class="panel text-center">
+                  <div class="user-heading alt wdgt-row terques-bg">
+                      <i class="fa fa-user"></i>
+                  </div>
 
+                  <div class="panel-body">
+                      <div class="wdgt-value">
+                        <a href="addclass.php?ref=quicklinks">
+                          <h1 class="count">4</h1>
+                          <p>Classes</p>
+                        </a>
+                      </div>
+                  </div>
+
+              </section>
+          </div>
+      </div>
 		</div>
         <!-- page end-->
         </section>

@@ -5,7 +5,6 @@
  * Written by JAN VIKTOR ADORA & CHRISTIAN ACE JOHN ASENCION CACOT, FEB 2017
  */
 include'./../connection.php';
-
     if(isset($_POST['etUsername']) && isset($_POST['etPassword'])){
       $ein = mysqli_real_escape_string($_CON,$_POST['etUsername']);
       $password = mysqli_real_escape_string($_CON,$_POST['etPassword']);

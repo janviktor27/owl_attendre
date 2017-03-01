@@ -24,13 +24,13 @@ $points_polygon =  4;
 $points_polygon_ceat =  5;
 $location = "";
 $classcount = 0;
-$grant = 0;
 //$_DAYTODAY = date("D");
 // $_TIMENOW = date("h:i:s");
 
+
 //DATE TIME SPOOF
 $_DAYTODAY = "Thu";
-$_FAKETIME = new DateTime("7:14 pm");
+$_FAKETIME = new DateTime("4:14 pm");
 $_TIMENOW = $_FAKETIME->format('h:i:s');
 //////////////////////////////////////////////////////////////////////////////
 //GET LOC FUNCTION
@@ -43,7 +43,6 @@ $_TIMENOW = $_FAKETIME->format('h:i:s');
     }//LOOP END
     return $c;
   }
-
   //POST METHODS SAMPLES
   //SAMPLE AHS
   // $longitude_x = 18.187513;
@@ -54,8 +53,8 @@ $_TIMENOW = $_FAKETIME->format('h:i:s');
   // $latitude_y = 120.567386;
 
   //SAMPLE MEGA
-  // $longitude_x = 18.187905;
-  // $latitude_y = 120.567594;
+  $longitude_x = 18.187629;
+  $latitude_y = 120.567669;
 
   //SAMPLE FINANCE
   // $longitude_x = 18.185575;
@@ -66,27 +65,26 @@ $_TIMENOW = $_FAKETIME->format('h:i:s');
   // $latitude_y = 120.571120;
 
   //UNIT TESTING VALUES
-  // $_POST['username'] = "13-00857";
-  // $_POST['qrcodescanned'] = "AA 204-Mega";
-  // $_POST['lat'] = $longitude_x;
-  // $_POST['longi'] = $latitude_y;
+  $_POST['username'] = "13-00857";
+  $_POST['qrcodescanned'] = "AA 204-Mega";
+  $_POST['lat'] = $longitude_x;
+  $_POST['longi'] = $latitude_y;
 
   //CHECK POST VALUES !
   if (isset($_POST['username']) && isset($_POST['qrcodescanned']) && isset($_POST['lat']) && isset($_POST['longi'])){
     //START LOCATION FUNCTION
-    $longitude_x = $_POST['lat'];
-    $latitude_y = $_POST['longi'];
-    if(getLoc($points_polygon, $mega_x, $mega_y, $longitude_x, $latitude_y)){$location="Mega";}
-    elseif(getLoc($points_polygon, $ahs_x, $ahs_y, $longitude_x, $latitude_y)){$location="AHS";}
-    elseif(getLoc($points_polygon, $science_x, $science_y, $longitude_x, $latitude_y)){$location="Science";}
-    elseif(getLoc($points_polygon, $sc_x, $sc_y, $longitude_x, $latitude_y)){$location="Students Center";}
-    elseif(getLoc($points_polygon, $finance_x, $finance_y, $longitude_x, $latitude_y)){$location="Finance";}
-    elseif(getLoc($points_polygon_ceat, $ceat_x, $ceat_y, $longitude_x, $latitude_y)){$location="Ceat";}
+    if(getLoc($points_polygon, $mega_x, $mega_y, $longitude_x, $latitude_y)){echo "User Location: Mega"; $location="Mega";}
+    elseif(getLoc($points_polygon, $ahs_x, $ahs_y, $longitude_x, $latitude_y)){echo "User Location: AHS"; $location="AHS";}
+    elseif(getLoc($points_polygon, $science_x, $science_y, $longitude_x, $latitude_y)){echo "User Location: Science"; $location="Science";}
+    elseif(getLoc($points_polygon, $sc_x, $sc_y, $longitude_x, $latitude_y)){echo "User Location: Students Center"; $location="Students Center";}
+    elseif(getLoc($points_polygon, $finance_x, $finance_y, $longitude_x, $latitude_y)){echo "User Location: Finance"; $location="Finance";}
+    elseif(getLoc($points_polygon_ceat, $ceat_x, $ceat_y, $longitude_x, $latitude_y)){echo "User Location: Ceat"; $location="Ceat";}
     //END LOCATION FUNCTION
 
     //GET STUDENT_ID
     $cin = $_POST['username'];
     $stud_id = getStudID($cin);
+    echo "<br/ >stud_id: $stud_id";
     //GET ROOM ID
     $room = $_POST['qrcodescanned'];
     if(substr_count($room,'-')){//CHECK IF STRING HAS HYPENS
@@ -95,119 +93,70 @@ $_TIMENOW = $_FAKETIME->format('h:i:s');
       $building_name = $room_ex[1];
       $building_id = getBuildingID($building_name);
       $room_id = getRoomID($room_name,$building_id);
-      echo $building_name;
-      echo $location;
-      $grant = 1;
-      }else{//Please scan room a QRCODE!
-        echo "wrongqrcode";
-        exit;
-      }//END ROOM IF
-      if($grant == 1){
-      if($building_name == $location){//CHECK IF USER LOCATION IS EQUAL TO BUILDING NAME
-      //GET ALL SCHEDULE
-      $sched_ids = getSchedIDS($stud_id);
-        foreach($sched_ids as $sched_id){
-          $sched_infos = getSchedInfo($sched_id);
-          $sched_days = $sched_infos[0];
-          $sched_start_time = new DateTime($sched_infos[1]);
-          $sched_end_time = new DateTime($sched_infos[2]);
-          $ins_id = $sched_infos[3];
-          $subject_id = $sched_infos[4];
-          $class_room_id = $sched_infos[5];
-          $semester = $sched_infos[6];
-          $_SY = $sched_infos[7];
-          //FORMAT TIME
-          $start_time = $sched_start_time->format('h:i:s');
-          $end_time = $sched_end_time->format('h:i:s');
-          if($class_room_id == $room_id){
-            //IF (DAY TODAY) EXIST ON SCHED DAYLIST
-            if(strpos($sched_days,$_DAYTODAY) !== false){
-              //CHECK IF TIME NOW IS IN BETWEEN START TIME AND END TIME
-              if($_TIMENOW >= $start_time && $_TIMENOW <= $end_time){
-                $FINAL_SCHED_ID = $sched_id;
-                $FINAL_SUBJECT_ID = $subject_id;
-                $FINAL_STUD_ID = $stud_id;
-                $FINAL_INS_ID = $ins_id;
-                $FINAL_ROOM_ID = $class_room_id;
-                $FINAL_SEMESTER = $semester;
-                $FINAL_SY = $_SY;
-                $classcount +=1;
-              }//END CHECK TIME
-            }//END DAY CHECK
-          }//END ROOM ID CHECK
-        }//END MAIN LOOP
-        if($classcount == 1){//HAS VERIFIED ALL
-          if(attendClass($FINAL_SCHED_ID,$FINAL_SUBJECT_ID,$FINAL_STUD_ID,$FINAL_INS_ID,$FINAL_ROOM_ID,$FINAL_SEMESTER,$FINAL_SY,$_NOW)){
-            echo "attended";//Successfully attended
-          }else{//Already attended this class
-            echo "already";
-          }
-        }else{//You don't have any class today at this time in this room.
-          echo "noclass";
-        }
-      }else{//Not in proper location!
-        echo "wronglocation";
+      echo "<br />building_name: $building_name";
+      echo "<br />room_id: $room_id";
+    }else{//DELETE THIS IF NO RETURNS
+      echo "<br />Please scan room a QRCODE!";
+    }//END ROOM IF
+    if($building_name == $location)://CHECK IF USER LOCATION IS EQUAL TO BUILDING NAME
+    //GET ALL SCHEDULE
+    $sched_ids = getSchedIDS($stud_id);
+      foreach($sched_ids as $sched_id){
+        $sched_infos = getSchedInfo($sched_id);
+        $sched_days = $sched_infos[0];
+        $sched_start_time = new DateTime($sched_infos[1]);
+        $sched_end_time = new DateTime($sched_infos[2]);
+        $ins_id = $sched_infos[3];
+        $subject_id = $sched_infos[4];
+        $class_room_id = $sched_infos[5];
+        $semester = $sched_infos[6];
+        $_SY = $sched_infos[7];
+        //FORMAT TIME
+        $start_time = $sched_start_time->format('h:i:s');
+        $end_time = $sched_end_time->format('h:i:s');
+        if($class_room_id == $room_id){
+          //IF (DAY TODAY) EXIST ON SCHED DAYLIST
+          if(strpos($sched_days,$_DAYTODAY) !== false){
+            //CHECK IF TIME NOW IS IN BETWEEN START TIME AND END TIME
+            if($_TIMENOW >= $start_time && $_TIMENOW <= $end_time){
+              $FINAL_SCHED_ID = $sched_id;
+              $FINAL_SUBJECT_ID = $subject_id;
+              $FINAL_STUD_ID = $stud_id;
+              $FINAL_INS_ID = $ins_id;
+              $FINAL_ROOM_ID = $class_room_id;
+              $FINAL_SEMESTER = $semester;
+              $FINAL_SY = $_SY;
+              $classcount +=1;
+            }//END CHECK TIME
+          }//END DAY CHECK
+        }//END ROOM ID CHECK
+      }//END MAIN LOOP
+      if($classcount == 1){//HAS VERIFIED ALL
+         echo "<br /><br /> success";
+         echo "<br /> semester: $FINAL_SEMESTER";
+         echo "<br /> school_year: $FINAL_SY";
+         echo "<br /> STUD_ID: $FINAL_STUD_ID";
+         echo "<br /> sched_id: $FINAL_SCHED_ID";
+         echo "<br /> INS ID: $FINAL_INS_ID";
+         echo "<br />subject_id: $FINAL_SUBJECT_ID";
+         echo "<br />class room id: $FINAL_ROOM_ID";
+        //  echo "<br />START TIME: $start_time";
+        //  echo "<br />END TIME: $end_time";
+        //  echo "<br />TIME NOW: $_TIMENOW";
+         echo "<br />DATE TIME NOW: $_NOW";
+
+      }else{
+        echo "<br />You don't have any class today at this time in this room.";
       }
-    }//END ROOM GRANT
+
+    else:
+      echo "<br/ >Not in proper location!";
+    endif;//END LOCATION CHECKING
   }//END MAIN IF
 
-  //ATTENDANCE FUNCTION
-  function attendClass($SCHED_ID,$SUBJECT_ID,$STUD_ID,$INS_ID,$ROOM_ID,$SEMESTER,$SY,$_NOW){
-    global $_CON;
-    global $classcount;
-    global $_TODAY;
-    if($classcount == 1){
-      $sqlCheck = mysqli_query($_CON,
-      "SELECT
-      attend_id
-      FROM
-      attendance_table
-      WHERE
-      sched_id='$SCHED_ID'
-      AND
-      subject_id='$SUBJECT_ID'
-      AND
-      stud_id='$STUD_ID'
-      AND
-      ins_id='$INS_ID'
-      AND
-      room_id='$ROOM_ID'
-      AND
-      attend_datetime
-      LIKE '%$_TODAY%'");
-      if($sqlCheck->num_rows > 0){
-        return false;
-      }else{
-        $sqlInsert = mysqli_query($_CON,
-        "INSERT INTO
-        attendance_table
-        (sched_id,
-        subject_id,
-        stud_id,
-        ins_id,
-        room_id,
-        semester,
-        school_year,
-        attend_datetime)
-        VALUES
-        ('$SCHED_ID',
-        '$SUBJECT_ID',
-        '$STUD_ID',
-        '$INS_ID',
-        '$ROOM_ID',
-        '$SEMESTER',
-        '$SY',
-        '$_NOW')");
-        return true;
-      }
-    }else{ return false;}
-  }
   //GETSCHEDULE INFORMATION
   function getSchedInfo($sched_id){
     global $_CON;
-    $_SY = getYear();
-    $RegSem = RegularSem();
-    $TriSem = TriSem();
     $sqlSearch = mysqli_query($_CON,
     "SELECT
     subject_id,
@@ -221,13 +170,7 @@ $_TIMENOW = $_FAKETIME->format('h:i:s');
     FROM
     sched_table
     WHERE
-    sched_id='$sched_id'
-    AND
-    school_year='$_SY'
-    AND
-    (semester='$RegSem'
-    OR
-    semester='$TriSem')");
+    sched_id='$sched_id'");
     $row = $sqlSearch->fetch_array();
     $subject_id = $row['subject_id'];
     $semester = $row['semester'];

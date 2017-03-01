@@ -7,8 +7,7 @@
 include'./../connection.php';
 
     if(isset($_GET['user'])){
-      // $CIN = mysqli_real_escape_string($_CON,$_GET['user']);
-      $CIN = '13-00857';
+      $CIN = mysqli_real_escape_string($_CON,$_GET['user']);
       studInfo($CIN);
     }
 

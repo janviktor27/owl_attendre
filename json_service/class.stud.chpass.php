@@ -5,7 +5,10 @@
  * Written by JAN VIKTOR ADORA & CHRISTIAN ACE JOHN ASENCION CACOT, FEB 2017
  */
 include'./../connection.php';
-
+    // $_POST['cin'] = '13-00857';
+    // $_POST['etOldpass'] = '654321';
+    // $_POST['etNewPass'] = '123456';
+    // $_POST['etConfirmPass'] = '123456';
     if(isset($_POST['cin']) && isset($_POST['etOldpass']) && isset($_POST['etNewPass']) && isset($_POST['etConfirmPass'])){
       $cin = mysqli_real_escape_string($_CON,$_POST['cin']);
       $etOldpass = mysqli_real_escape_string($_CON,$_POST['etOldpass']);

@@ -1,4 +1,4 @@
-<?php include'classes/class.search.php'; ?>
+<?php include'classes/class.search.ins.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,30 +34,7 @@
     			<div class="col-md-12">
     				<section class="panel">
               <header class="panel-heading">
-                <?php if(insID($_GET['user']) != ''): ?>
-                <div class="row">
-                  <form method="post" action="">
-                  <div class="col-md-6 col-xs-6">
-                    <select name="inpCourse" class="form-control" required>
-                      <option value="" default>Select Course</option>
-                      <?php courses(); ?>
-                    </select>
-                  </div>
-                  <div class="input-group col-md-6 col-xs-5">
-            					<select class='form-control' name='inpYear' required>
-                        <option value='' default>Select Year</option>
-            						<option value='1'>First year</option>
-            						<option value='2'>Second year</option>
-            						<option value='3'>Third year</option>
-            						<option value='4'>Fourth year</option>
-            						<option value='5'>Fifth year</option>
-            					</select>
-                      <span class="input-group-btn">
-                        <button name="btn_search" class="btn btn-success" type="submit"><i class="fa fa-search"></i></button>
-                      </span>
-                  </div>
-                  </form>
-                </div>
+                <?php if(studID($_GET['user']) != ''): ?>
               <?php else:?>
               Please Login to app.
               <?php endif;?>
